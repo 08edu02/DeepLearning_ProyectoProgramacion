@@ -1,0 +1,100 @@
+# ==============================================================================
+# DATOS Y ARCHIVOS PESADOS (Datasets)
+# ==============================================================================
+# Ignorar el contenido de data/, pero conservar la carpeta en el repositorio
+data/*
+!data/.gitkeep
+
+# Archivos de archivo comprimido y temporales de descarga
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+
+# ==============================================================================
+# CREDENCIALES Y SECRETOS
+# ==============================================================================
+kaggle.json
+.env
+*.pem
+*.key
+
+# ==============================================================================
+# MODELOS, PESOS Y CHECKPOINTS DE DEEP LEARNING
+# ==============================================================================
+# Modelos de Keras (formato moderno Keras 3 y legado HDF5)
+*.keras
+*.h5
+*.hdf5
+
+# Checkpoints de TensorFlow / PyTorch
+*.ckpt
+*.ckpt.*
+*.pb
+checkpoints/
+saved_model/
+models/*
+!models/.gitkeep
+
+# ==============================================================================
+# LOGS, MONITORIZACIÓN Y TENSORBOARD
+# ==============================================================================
+logs/
+!logs/.gitkeep
+events.out.tfevents.*
+*.tfevents.*
+
+# ==============================================================================
+# JUPYTER NOTEBOOKS
+# ==============================================================================
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# ==============================================================================
+# COMPILACIÓN LATEX / NBCONVERT (Al generar el PDF en Colab/Local)
+# ==============================================================================
+# Archivos auxiliares generados por XeTeX durante `nbconvert --to pdf`
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.run.xml
+*.synctex.gz
+
+# ==============================================================================
+# ENTORNO PYTHON Y DEPENDENCIAS
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ==============================================================================
+# ARCHIVOS DEL SISTEMA OPERATIVO E IDEs
+# ==============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code / JetBrains PyCharm
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
