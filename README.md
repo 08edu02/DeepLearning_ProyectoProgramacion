@@ -1,8 +1,8 @@
 # Comparación de Estrategias para la Clasificación de Imágenes: CNN *From Scratch* vs. *Transfer Learning*
 
 **Maestría:** Maestría en Inteligencia Artificial  
-**Asignatura:** 07MIAR - Redes Neuronales y Deep Learning  
-**Actividad:** Proyecto de programación — *Deep Vision in classification tasks*  
+**Asignatura:** 07MIAR_04_A_2026-27 - Redes Neuronales y Deep Learning  
+**Actividad:** Proyecto de programación C1 — *Deep Vision in classification tasks*  
 
 ### Integrantes
 * Carlos Eduardo Chavarria Mujica - carloseduardo7366@gmail.com - https://github.com/08edu02
