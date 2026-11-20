@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Grupo05_Apellidos_Nombre</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Grupo05_Chavarria_Palomino_Chumpitaz</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -8355,6 +8355,20 @@ Rango de valores de píxeles: Min = 0.0, Max = 255.0
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=93331bbe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li><strong><code>cache()</code> y <code>shuffle(buffer_size=1000)</code>:</strong> Al aplicarse sobre el dataset ya agrupado por lotes (<code>batch_size=32</code>), la memoria intermedia permuta el orden de despacho de los lotes en cada época. Esta estrategia optimiza el ancho de banda hacia la GPU minimizando la sobrecarga de reconstrucción de lotes en CPU.</li>
+</ul>
+<p>Nota: esto se hizo para acelerar el entrenamiento al probar con hardware local: RTX 3090, ryzen 7 5800x, 32GB RAM.</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a5dcb495">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -8912,7 +8926,7 @@ Para solucionar estos problemas identificados experimentalmente, se rediseña la
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.2.-Compilaci%C3%B3n,-Hiperpar%C3%A1metros-y-Callbacks">4.2. Compilación, Hiperparámetros y Callbacks<a class="anchor-link" href="#4.2.-Compilaci%C3%B3n,-Hiperpar%C3%A1metros-y-Callbacks">¶</a></h2>
+<h3 id="4.2.1.-Compilaci%C3%B3n,-Hiperpar%C3%A1metros-y-Callbacks">4.2.1. Compilación, Hiperparámetros y Callbacks<a class="anchor-link" href="#4.2.1.-Compilaci%C3%B3n,-Hiperpar%C3%A1metros-y-Callbacks">¶</a></h3>
 </div>
 </div>
 </div>
@@ -8958,7 +8972,7 @@ Para solucionar estos problemas identificados experimentalmente, se rediseña la
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.3.-Entrenamiento">4.3. Entrenamiento<a class="anchor-link" href="#4.3.-Entrenamiento">¶</a></h2>
+<h3 id="4.2.2.-Entrenamiento-del-Modelo-Final">4.2.2. Entrenamiento del Modelo Final<a class="anchor-link" href="#4.2.2.-Entrenamiento-del-Modelo-Final">¶</a></h3>
 </div>
 </div>
 </div>
@@ -9121,11 +9135,10 @@ Restoring model weights from the end of the best epoch: 26.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Lectura-de-las-curvas-de-aprendizaje-(Modelo-Regularizado)">Lectura de las curvas de aprendizaje (Modelo Regularizado)<a class="anchor-link" href="#Lectura-de-las-curvas-de-aprendizaje-(Modelo-Regularizado)">¶</a></h3><p>En las curvas de aprendizaje se aprecia una convergencia progresiva y controlada. A diferencia del modelo baseline, la incorporación de Data Augmentation y regularización L2 previene el colapso temprano por sobreajuste:</p>
+<h3 id="Lectura-de-las-curvas-de-aprendizaje-(Modelo-Regularizado)">Lectura de las curvas de aprendizaje (Modelo Regularizado)<a class="anchor-link" href="#Lectura-de-las-curvas-de-aprendizaje-(Modelo-Regularizado)">¶</a></h3><p>En las curvas de aprendizaje se aprecia una convergencia global hacia un $96.90\%$ en validación, pero acompañada de oscilaciones periódicas a lo largo del entrenamiento:</p>
 <ul>
-<li>Durante las primeras épocas se observa una oscilación inicial propia del calentamiento de gradientes y la adaptación a las transformaciones geométricas, con picos de pérdida en validación en la época 4 ($val\_loss = 2.4090$) y en la época 9 ($val\_loss = 2.3220$).</li>
-<li>A partir de la época 10, las reducciones adaptativas de tasa de aprendizaje aplicadas por <code>ReduceLROnPlateau</code> (descendiendo progresivamente desde $1 \times 10^{-3}$ hasta $3.12 \times 10^{-5}$) amortiguan las oscilaciones y estabilizan el descenso de la pérdida.</li>
-<li>El modelo alcanza su mínimo de validación en la época 26 con un $val\_loss = 0.2275$ y un $val\_accuracy = 96.90\%$. El callback <code>EarlyStopping</code> detiene el entrenamiento en la época 34 tras 8 épocas sin mejora y restaura de forma efectiva los mejores pesos de dicha época 26, logrando un <strong>$96.93\%$ de precisión en test</strong>.</li>
+<li><strong>Diagnóstico de las oscilaciones (Desfase de BatchNorm):</strong> Se observan picos de pérdida en validación en épocas tempranas (época 4 con $val\_loss = 2.4090$ y época 9 con $2.3220$), así como repuntes tardíos (época 28 con $val\_loss = 0.7433$ y $val\_accuracy = 89.03\%$). Este fenómeno se debe a la interacción entre un tamaño de lote moderado ($batch\_size=32$), la rotación acusada de Data Augmentation ($\pm 54^\circ$) y las capas de <code>BatchNormalization</code>. La disparidad morfológica entre los lotes aumentados de entrenamiento y los lotes limpios de validación provoca fluctuaciones en la estimación de las medias y varianzas móviles de normalización.</li>
+<li><strong>Acción de los Callbacks:</strong> La reducción progresiva del learning rate por <code>ReduceLROnPlateau</code> atenúa la severidad de estos picos conforme avanza el entrenamiento. <code>EarlyStopping</code> finaliza el proceso en la época 34 y restaura de forma preventiva los mejores pesos correspondientes a la <strong>época 26</strong> ($val\_loss = 0.2275$, $val\_accuracy = 96.90\%$), evitando retener el modelo en una fase de inestabilidad.</li>
 </ul>
 </div>
 </div>
@@ -9335,7 +9348,12 @@ weighted avg       0.97      0.97      0.97      3000
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Planteamiento-de-la-siguiente-prueba-experimental">Planteamiento de la siguiente prueba experimental<a class="anchor-link" href="#Planteamiento-de-la-siguiente-prueba-experimental">¶</a></h3><p>A partir de la matriz de confusión se identifican qué clases se confunden entre sí con mayor frecuencia (candidatas naturales: pares con alta similitud visual señalados en la Sección 2.1, p. ej. <em>Broccoli</em> vs <em>Cauliflower</em>, o <em>Cucumber</em> vs <em>Bitter Gourd</em>). Esta línea base cuantifica cuánto hay que mejorar: la Estrategia 2 (Transfer Learning) debería aportar representaciones visuales más ricas (bordes, texturas, formas) aprendidas sobre ImageNet, reduciendo específicamente estas confusiones.</p>
+<h3 id="Diagn%C3%B3stico-Comparativo:-Baseline-vs.-Modelo-Regularizado">Diagnóstico Comparativo: Baseline vs. Modelo Regularizado<a class="anchor-link" href="#Diagn%C3%B3stico-Comparativo:-Baseline-vs.-Modelo-Regularizado">¶</a></h3><ul>
+<li><strong>Evaluación de métricas y regularización L2:</strong> El modelo base alcanzó un $95.27\%$ de precisión en test con un <em>loss</em> de $0.2213$, mientras que el modelo regularizado obtuvo un <strong>$96.93\%$ (+1.66 puntos porcentuales)</strong> con un <em>loss</em> reportado de $0.2249$. Es fundamental señalar que la función <code>evaluate()</code> en Keras computa la pérdida total sumando la penalización de pesos L2 ($\text{Loss} = \text{CrossEntropy} + \lambda \sum ||W||_2^2$). Por ende, la aparente similitud en la pérdida refleja que el modelo regularizado compensa la penalización impuesta a sus pesos con una entropía cruzada pura más baja.</li>
+<li><strong>Eficiencia paramétrica:</strong> La ganancia capital radica en la arquitectura: sustituir <code>Flatten</code> por <code>GlobalAveragePooling2D</code> y añadir regularización redujo los parámetros de <strong>12,94 M a solo 490.479</strong> (una reducción estructural del <strong>$96.2\%$</strong>), descartando millones de conexiones densas redundantes.</li>
+<li><strong>Análisis de la Matriz de Confusión:</strong> Los errores del modelo propio se concentran en clases con alta correlación cromática y textural. La mayor confusión individual corresponde a **11 muestras de <em>Papaya</em> clasificadas como <em>Cucumber***, seguida de **10 muestras de *Cauliflower</em> clasificadas como <em>Broccoli*** y **9 de *Papaya</em> como *Bottle Gourd***.</li>
+</ul>
+<h3 id="Planteamiento-de-la-siguiente-prueba-experimental">Planteamiento de la siguiente prueba experimental<a class="anchor-link" href="#Planteamiento-de-la-siguiente-prueba-experimental">¶</a></h3><p>A partir de la matriz de confusión se constata que las pocas confusiones restantes en el modelo propio se concentran en clases visualmente análogas (como <em>Cauliflower</em> confundido con <em>Broccoli</em>, o <em>Papaya</em> con <em>Bottle Gourd</em>). Para superar esta barrera, la <strong>Estrategia 2 (Transfer Learning)</strong> aportará extractores de características visuales universales y profundos aprendidos sobre ImageNet.</p>
 </div>
 </div>
 </div>
@@ -9771,11 +9789,15 @@ Restoring model weights from the end of the best epoch: 15.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="An%C3%A1lisis-Cr%C3%ADtico-Comparativo-(From-Scratch-vs-Transfer-Learning)">Análisis Crítico Comparativo (From Scratch vs Transfer Learning)<a class="anchor-link" href="#An%C3%A1lisis-Cr%C3%ADtico-Comparativo-(From-Scratch-vs-Transfer-Learning)">¶</a></h3><p>La comparativa cuantitativa entre la red entrenada desde cero y las arquitecturas preentrenadas evidencia la superioridad de la transferencia de conocimiento:</p>
-<ul>
-<li><strong>Eficiencia y convergencia:</strong> Mientras que la red <em>from scratch</em> requirió 34 épocas para consolidar un $96.93\%$ de test accuracy (test loss de $0.2249$), las arquitecturas preentrenadas alcanzaron cotas superiores al $99.8\%$ en solo 15 épocas.</li>
-<li><strong>Resolución de confusiones morfológicas:</strong> El modelo desde cero evidenció dificultades en clases botánicamente afines (por ejemplo, 10 confusiones de <em>Cauliflower</em> clasificadas como <em>Broccoli</em> y 9 de <em>Papaya</em> como <em>Bottle Gourd</em>). La transferencia de características visuales universales de ImageNet eliminó prácticamente estos errores.</li>
-<li><strong>Selección de la mejor arquitectura:</strong> Entre los dos modelos evaluados, <strong>MobileNetV2</strong> obtuvo el mejor desempeño global con un <strong>$99.93\%$ de precisión en test</strong> y una pérdida de <strong>$0.0260$</strong>, superando levemente a ResNet50 ($99.87\%$ y pérdida de $0.0281$). La arquitectura de convoluciones separables en profundidad e <em>inverted residuals</em> de MobileNetV2 no solo demostró ser más eficiente en parámetros y tiempo de entrenamiento, sino que exhibió una capacidad de generalización superior para este conjunto de datos, resultando seleccionada para la fase de Fine-Tuning.</li>
+<h3 id="An%C3%A1lisis-Comparativo-y-Selecci%C3%B3n-de-Arquitectura">Análisis Comparativo y Selección de Arquitectura<a class="anchor-link" href="#An%C3%A1lisis-Comparativo-y-Selecci%C3%B3n-de-Arquitectura">¶</a></h3><ul>
+<li><strong>Convergencia temprana:</strong> Ambas arquitecturas preentrenadas alcanzaron cotas superiores al $99.5\%$ en validación ya desde las dos primeras épocas (ResNet50 alcanzó un $99.90\%$ en la época 2), lo que demuestra la riqueza de los filtros universales de ImageNet.</li>
+<li><strong>Empate técnico y principio de parsimonia:</strong> Sobre el conjunto de test, MobileNetV2 ($99.93\%$) y ResNet50 ($99.87\%$) exhiben una diferencia de apenas <strong>2 imágenes sobre 3.000</strong>, lo que estadísticamente constituye un <strong>empate técnico</strong>.</li>
+<li><strong>Criterio formal de selección:</strong> Siguiendo las buenas prácticas metodológicas, <strong>el conjunto de test no debe emplearse como criterio de selección de hiperparámetros ni de modelos</strong>. La elección de <strong>MobileNetV2</strong> para la fase de Fine-Tuning se justifica exclusivamente por <strong>eficiencia computacional y ligereza arquitectural</strong>:<ul>
+<li><strong>Volumen de parámetros:</strong> MobileNetV2 cuenta con <strong>2,26 millones de parámetros</strong> frente a los más de 23,5 millones de ResNet50 (una reducción superior al $90\%$).</li>
+<li><strong>Latencia de entrenamiento:</strong> Los tiempos por época en GPU fueron de 3–4 segundos para MobileNetV2 frente a 6–8 segundos para ResNet50.<br/>
+Por la <em>Navaja de Ockham</em>, a igualdad práctica de rendimiento, se debe priorizar la arquitectura más compacta y eficiente.</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -10278,42 +10300,32 @@ weighted avg       1.00      1.00      1.00      3000
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Datos-complementarios">Datos complementarios<a class="anchor-link" href="#Datos-complementarios">¶</a></h2><ul>
-<li><strong>Pipeline <code>tf.data</code> reproducible</strong>, con <code>cache</code>, <code>shuffle</code> y <code>prefetch(AUTOTUNE)</code>, separando explícitamente la normalización (dependiente de la estrategia) del resto de la carga de datos.</li>
-<li>**CNN <em>from scratch*** con regularización L2, Batch Normalization, Dropout, <code>GlobalAveragePooling2D</code> y *Data Augmentation</em> integrada como capa del modelo.</li>
-<li><strong>Transfer Learning</strong> comparando dos arquitecturas con filosofías distintas (MobileNetV2 vs ResNet50), cada una con su <code>preprocess_input</code> correcto aplicado dentro del modelo.</li>
-<li><strong>Fine-Tuning</strong> descongelando selectivamente el tramo final de la mejor arquitectura, con <em>learning rate</em> reducido y las capas de Batch Normalization bloqueadas para no desestabilizar las estadísticas de ImageNet.</li>
-<li><strong>Callbacks de <code>EarlyStopping</code> y <code>ReduceLROnPlateau</code></strong> en las tres fases, y evaluación consistente sobre un conjunto de test que nunca participó en el entrenamiento ni en la selección de hiperparámetros.</li>
+<h3 id="Datos-complementarios">Datos complementarios<a class="anchor-link" href="#Datos-complementarios">¶</a></h3><ul>
+<li><strong>Pipeline tf.data reproducible:</strong> con <code>cache</code>, <code>shuffle</code> y <code>prefetch(AUTOTUNE)</code>, separando la normalización específica de cada modelo.</li>
+<li><strong>CNN from scratch:</strong> regularizada con penalización L2, Batch Normalization, Dropout progresivo y GlobalAveragePooling2D.</li>
+<li><strong>Transfer Learning:</strong> comparando MobileNetV2 frente a ResNet50, seleccionando la primera por eficiencia operacional.</li>
+<li><strong>Fine-Tuning:</strong> descongelando el 25% superior de MobileNetV2 con tasa reducida ($1 \times 10^{-5}$) y capas BatchNorm congeladas.</li>
 </ul>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=g2fm-e1flqVO">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Cr%C3%ADtica-comparativa-entre-estrategias">Crítica comparativa entre estrategias<a class="anchor-link" href="#Cr%C3%ADtica-comparativa-entre-estrategias">¶</a></h3><ul>
-<li><strong>CNN From Scratch frente a Transfer Learning:</strong> El modelo From Scratch demostró que es posible resolver el problema con alta precisión ($96.93\%$), pero requirió diseñar cuidadosamente mecanismos de regularización ($L_2$, Dropout, BatchNorm y Data Augmentation) para evitar la memorización. Por el contrario, las estrategias de Transfer Learning superaron el $99.8\%$ de acierto en menos de la mitad de épocas, mostrando una frontera de decisión prácticamente perfecta.</li>
-<li><strong>Selección de la arquitectura óptima:</strong> Aunque ResNet50 es una arquitectura considerablemente más profunda, <strong>MobileNetV2</strong> demostró ser la alternativa superior para este conjunto de datos, logrando un $99.93\%$ en su fase congelada con una estructura de cómputo más ligera y eficiente.</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=VPoc7YTRmiwd">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Conclusiones-Globales">Conclusiones Globales<a class="anchor-link" href="#Conclusiones-Globales">¶</a></h3><ol>
-<li><strong>Evolución del entrenamiento propio (<em>From Scratch</em>):</strong> La experimentación progresiva validó el impacto de las técnicas de la asignatura. El modelo base sin regularizar sufría de sobreajuste temprano con 12.9M de parámetros. El modelo final con GAP y regularización alcanzó un <strong>$96.93\%$ de precisión en test</strong>, reduciendo el tamaño del modelo en un $96.2\%$ (490.479 parámetros).</li>
-<li><strong>Transferencia de Conocimiento:</strong> Se constató la enorme ventaja de reutilizar características aprendidas en ImageNet para tareas agroalimentarias. MobileNetV2 resolvió de forma inmediata las ambigüedades entre verduras similares (<em>Broccoli</em>, <em>Cabbage</em>, <em>Cauliflower</em>).</li>
-<li><strong>Efecto Techo en Fine-Tuning:</strong> La fase de descongelamiento selectivo sobre MobileNetV2 refinó la función de coste ($Test Loss$ de $0.0247$), pero constató que cuando un modelo base roza el $100\%$ de acierto, el Fine-Tuning no ofrece ganancias prácticas en exactitud discreta, consolidando a MobileNetV2 (Transfer Learning puro) como la solución de producción óptima por balance entre coste computacional y precisión.</li>
+<li><strong>Evolución From Scratch:</strong> La experimentación demostró que una red simple sin regularizar alcanza un $95.27\%$ a costa de 12.9M de parámetros. El modelo regularizado elevó la precisión a <strong>$96.93\%$</strong> con solo 490.479 parámetros (reducción del $96.2\%$).</li>
+<li><strong>Transferencia de Conocimiento:</strong> Reutilizar representaciones preentrenadas resolvió de inmediato las confusiones críticas del modelo propio (<em>Papaya/Cucumber</em> y <em>Cauliflower/Broccoli</em>), alcanzando cotas superiores al $99.8\%$.</li>
+<li><strong>Efecto Techo en Fine-Tuning:</strong> La exactitud se mantuvo esencialmente constante ($99.93\% \rightarrow 99.87\%$, una variación de apenas 2 imágenes en la frontera de decisión), mientras que la pérdida combinada se redujo levemente ($0.0260 \rightarrow 0.0247$), evidenciando que el benchmark se encuentra prácticamente saturado para modelos preentrenados.</li>
 </ol>
+<h3 id="Limitaciones-Metodol%C3%B3gicas-y-Trabajo-Futuro">Limitaciones Metodológicas y Trabajo Futuro<a class="anchor-link" href="#Limitaciones-Metodol%C3%B3gicas-y-Trabajo-Futuro">¶</a></h3><ul>
+<li><strong>Naturaleza del benchmark:</strong> Aunque el dataset presenta cierta variabilidad de fondos, la resolución uniforme y el centrado de los ejemplares facilitan la clasificación, generando un efecto techo que limita el poder discriminativo entre arquitecturas profundas. Una evaluación más rigurosa requeriría evaluar robustez ante desenfoque, oclusiones parciales o datos fuera de distribución (<em>Out-of-Distribution</em>).</li>
+<li><strong>Ausencia de validación estadística multi-seed:</strong> Las conclusiones se derivan de una ejecución única ($N=1$). En un entorno de investigación formal, sería preceptivo computar medias e intervalos de confianza sobre múltiples semillas para certificar si variaciones del orden del $0.06\%$ representan diferencias reales.</li>
+<li><strong>Comparabilidad de pérdidas:</strong> Dado que Keras agrega los términos de regularización de pesos al valor retornado por <code>evaluate()</code>, las comparaciones de <em>loss</em> entre redes con distintas dimensiones en sus cabezas densas deben interpretarse como pérdidas de coste global y no estrictamente como entropía cruzada pura.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=274b0090">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Ejemplo de uso:</strong><br/>
 Pensemos en una cadena de supermercados o una empresa de alimentos de productos frescos y saludables que busca mejorar su experiencia de compra digital y sus campañas promocionales:</p>
 <ul>
