@@ -6,8 +6,8 @@
 
 ### Integrantes
 * Carlos Eduardo Chavarria Mujica - carloseduardo7366@gmail.com - https://github.com/08edu02
-* Everth Roman Palomino Lanchipa - 
-* Luis Alberto Chumpitaz Santivañez - - https://github.com/uluisgit
+* Everth Roman Palomino Lanchipa - epalominola@gmail.com - https://github.com/epalominola
+* Luis Alberto Chumpitaz Santivañez - l.chumpitaz.s@outlook.com - https://github.com/uluisgit
 
 ---
 
