@@ -79,7 +79,7 @@ DeepLearning_ProyectoProgramacion/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone [https://github.com/08edu02/DeepLearning_ProyectoProgramacion](https://github.com/08edu02/DeepLearning_ProyectoProgramacion)
+git clone https://github.com/08edu02/DeepLearning_ProyectoProgramacion
 cd DeepLearning_ProyectoProgramacion
 ```
 
